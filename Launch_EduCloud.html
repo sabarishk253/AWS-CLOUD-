@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduCloud — Quick Launch Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #eff6ff;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --emerald-500: #10b981;
+      --emerald-50: #ecfdf5;
+      --amber-500: #f59e0b;
+      --amber-50: #fffbeb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #eff6ff 0%, #f8fafc 100%);
+      color: var(--slate-800);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+      margin-bottom: 16px;
+      color: white;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--slate-900);
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--slate-600);
+      margin-top: 6px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Status Banner */
+    .status-card {
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .status-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--amber-500);
+      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+      transition: all 0.3s;
+    }
+
+    .status-indicator.online {
+      background: var(--emerald-500);
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.15); opacity: 0.8; }
+    }
+
+    .status-text h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--slate-900);
+    }
+
+    .status-text p {
+      font-size: 12px;
+      color: var(--slate-600);
+    }
+
+    .btn-connect {
+      background: var(--primary);
+      color: white;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-connect:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    /* Grid of action cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+      border-color: var(--slate-300);
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .card-icon.blue { background: #eff6ff; color: #2563eb; }
+    .card-icon.emerald { background: #ecfdf5; color: #059669; }
+    .card-icon.purple { background: #faf5ff; color: #7c3aed; }
+
+    .card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: var(--slate-600);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .card-action {
+      margin-top: auto;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: var(--slate-100);
+      color: var(--slate-700);
+      border-color: var(--slate-200);
+    }
+    .btn-secondary:hover {
+      background: var(--slate-200);
+      color: var(--slate-900);
+    }
+
+    /* Credentials section */
+    .creds-box {
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .creds-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--slate-700);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .creds-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .creds-table th {
+      text-align: left;
+      padding: 8px 12px;
+      background: var(--slate-50);
+      color: var(--slate-600);
+      font-weight: 600;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .creds-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--slate-100);
+      color: var(--slate-700);
+    }
+
+    .creds-table code {
+      background: var(--slate-100);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: var(--slate-900);
+      font-size: 11px;
+    }
+
+    .badge-role {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-admin { background: #fee2e2; color: #dc2626; }
+    .badge-teacher { background: #fef3c7; color: #d97706; }
+    .badge-student { background: #dbeafe; color: #1d4ed8; }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 16px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--slate-900);
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--slate-400);
+    }
+
+    .steps-list {
+      list-style: none;
+      margin-top: 12px;
+      counter-reset: step-counter;
+    }
+    .steps-list li {
+      position: relative;
+      padding-left: 36px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--slate-700);
+    }
+    .steps-list li::before {
+      counter-increment: step-counter;
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 24px;
+      height: 24px;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      font-size: 11px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <div class="logo-badge">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+      </div>
+      <h1 class="title">EduCloud Launch Portal</h1>
+      <p class="subtitle">AI-Powered Academic Document & Assignment Management System with Data Sovereignty</p>
+    </div>
+
+    <!-- Live Status Banner -->
+    <div class="status-card" id="statusCard">
+      <div class="status-left">
+        <div class="status-indicator" id="statusDot"></div>
+        <div class="status-text">
+          <h4 id="statusTitle">Checking EduCloud Server...</h4>
+          <p id="statusDesc">Pinging http://127.0.0.1:8000</p>
+        </div>
+      </div>
+      <div>
+        <a href="http://127.0.0.1:8000" id="connectBtn" class="btn-connect" style="display: none;">
+          Open Live App &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- 3 Action Cards -->
+    <div class="grid">
+      <!-- 1. One-Click Desktop Launcher -->
+      <div class="card">
+        <div>
+          <div class="card-icon blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          </div>
+          <h3>1. One-Click Server Start</h3>
+          <p>Double-click <code>Run_EduCloud.bat</code> in this project folder. It boots the Python backend, SQLite DB, AI engine, and launches your browser automatically.</p>
+        </div>
+        <div class="card-action">
+          <button class="btn btn-secondary" onclick="alert('In your Windows File Explorer, double-click: Run_EduCloud.bat\n\nThis will start the unified server and automatically open EduCloud in your browser!')">
+            Instructions &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Direct Web App -->
+      <div class="card">
+        <div>
+          <div class="card-icon emerald">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3>2. Open Live Application</h3>
+          <p>Access the unified EduCloud single-page application at <code>http://127.0.0.1:8000</code>. Includes all student, teacher, and admin workflows.</p>
+        </div>
+        <div class="card-action">
+          <a href="http://127.0.0.1:8000" class="btn btn-primary" id="openAppBtn">
+            Launch EduCloud &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- 3. AWS Amplify Deployment -->
+      <div class="card">
+        <div>
+          <div class="card-icon purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+            </svg>
+          </div>
+          <h3>3. Deploy to AWS Amplify</h3>
+          <p>Pre-packaged <code>amplify_deploy.zip</code> is generated in this folder. Simply drag & drop into AWS Amplify to host the app in 15 seconds.</p>
+        </div>
+        <div class="card-action">
+          <button class="btn btn-secondary" onclick="openAmplifyModal()">
+            Amplify Upload Guide &rarr;
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo Credentials -->
+    <div class="creds-box">
+      <div class="creds-title">Demo User Credentials (Individual Portals &amp; Monitoring)</div>
+      <table class="creds-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Email Address</th>
+            <th>Password</th>
+            <th>Name &amp; Department</th>
+            <th>Portal Capability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge-role badge-admin">Admin</span></td>
+            <td><code>admin@educloud.local</code></td>
+            <td><code>Admin@123456</code></td>
+            <td>Dr. Vikram Malhotra (System Governance)</td>
+            <td>Teacher Monitoring, System Governance &amp; Audit Trail</td>
+          </tr>
+          <tr>
+            <td><span class="badge-role badge-teacher">Senior Faculty</span></td>
+            <td><code>prof.sharma@educloud.local</code></td>
+            <td><code>Teacher@123456</code></td>
+            <td>Prof. Rajesh Sharma (CS &amp; Engg HOD)</td>
+            <td>Course Management &amp; AI-Assisted Submission Grading</td>
+          </tr>
+          <tr>
+            <td><span class="badge-role badge-teacher">Faculty</span></td>
+            <td><code>dr.patel@educloud.local</code></td>
+            <td><code>Teacher@123456</code></td>
+            <td>Dr. Priya Patel (Data Science &amp; AI)</td>
+            <td>Coursework Reviews &amp; AI Rubric Evaluations</td>
+          </tr>
+          <tr>
+            <td><span class="badge-role badge-teacher" style="background:#fef3c7; color:#b45309; border: 1px solid #fde68a;">New Faculty</span></td>
+            <td><code>prof.roy@educloud.local</code></td>
+            <td><code>Teacher@123456</code></td>
+            <td>Prof. Ananya Roy (Cybersecurity &amp; Cloud)</td>
+            <td>Newly Onboarded Faculty Supervised in Monitoring Console</td>
+          </tr>
+          <tr>
+            <td><span class="badge-role badge-student">Student</span></td>
+            <td><code>rahul.verma@educloud.local</code></td>
+            <td><code>Student@123456</code></td>
+            <td>Rahul Verma (6th Sem CSE)</td>
+            <td>Manual Assignment Submit &amp; AI Pre-Check</td>
+          </tr>
+          <tr>
+            <td><span class="badge-role badge-student">Student</span></td>
+            <td><code>ananya.singh@educloud.local</code></td>
+            <td><code>Student@123456</code></td>
+            <td>Ananya Singh (6th Sem CSE)</td>
+            <td>Online Lab Submissions &amp; Grade Insights</td>
+          </tr>
+          <tr>
+            <td><span class="badge-role badge-student">Student</span></td>
+            <td><code>rohan.gupta@educloud.local</code></td>
+            <td><code>Student@123456</code></td>
+            <td>Rohan Gupta (4th Sem AI &amp; DS)</td>
+            <td>Assignment Submissions &amp; AI Studio</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Submission-to-Faculty Direct Map -->
+      <div style="margin-top: 16px; padding: 14px 18px; border-radius: 12px; background: #eff6ff; border: 1px solid #bfdbfe; font-size: 12px; color: #1e3a8a;">
+        <strong style="display:block; font-size: 13px; margin-bottom: 6px;">🔄 Quick Student-to-Faculty Evaluation Testing Map:</strong>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 8px; margin-top: 8px;">
+          <div style="background: white; padding: 8px 12px; border-radius: 8px; border: 1px solid #dbeafe;">
+            <strong>1. CS301 (Lab 3):</strong> Student <code>rahul.verma</code> submits &rarr; Evaluated by <strong>Prof. Rajesh Sharma</strong> (<code>prof.sharma</code>)
+          </div>
+          <div style="background: white; padding: 8px 12px; border-radius: 8px; border: 1px solid #dbeafe;">
+            <strong>2. DS204 (Milestone 1):</strong> Student <code>ananya.singh</code> submits &rarr; Evaluated by <strong>Dr. Priya Patel</strong> (<code>dr.patel</code>)
+          </div>
+          <div style="background: white; padding: 8px 12px; border-radius: 8px; border: 1px solid #dbeafe;">
+            <strong>3. CY501 (Lab 1):</strong> Student <code>rohan.gupta</code> submits &rarr; Evaluated by <strong>Prof. Ananya Roy</strong> (<code>prof.roy</code> - New Faculty)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Amplify Guide Modal -->
+  <div class="modal-overlay" id="amplifyModal" onclick="closeAmplifyModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">AWS Amplify Drag & Drop Deployment</h3>
+        <button class="modal-close" onclick="closeAmplifyModal()">&times;</button>
+      </div>
+      <p style="font-size: 13px; color: var(--slate-600); margin-bottom: 12px;">
+        Deploy EduCloud to the cloud without configuring Git or build scripts:
+      </p>
+      <ol class="steps-list">
+        <li>
+          Locate <strong><code>amplify_deploy.zip</code></strong> in the project folder.
+        </li>
+        <li>
+          Open <a href="https://console.aws.amazon.com/amplify" target="_blank" style="color: var(--primary); font-weight: 600;">AWS Amplify Console</a> and click <strong>Create new app</strong>.
+        </li>
+        <li>
+          Select <strong>Deploy without Git provider</strong> (Manual deployment).
+        </li>
+        <li>
+          Enter your App name (e.g. <code>EduCloud</code>) and branch (<code>main</code>).
+        </li>
+        <li>
+          Drag and drop <strong><code>amplify_deploy.zip</code></strong> into the upload area.
+        </li>
+        <li>
+          Click <strong>Save and deploy</strong>. Your static site is live with HTTPS in seconds!
+        </li>
+      </ol>
+      <div style="margin-top: 20px; text-align: right;">
+        <button class="btn btn-primary" onclick="closeAmplifyModal()">Got It</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const statusDot = document.getElementById('statusDot');
+    const statusTitle = document.getElementById('statusTitle');
+    const statusDesc = document.getElementById('statusDesc');
+    const connectBtn = document.getElementById('connectBtn');
+    let isOnline = false;
+
+    async function checkServer() {
+      try {
+        const res = await fetch('http://127.0.0.1:8000/api/health', { method: 'GET', cache: 'no-cache' });
+        if (res.ok) {
+          if (!isOnline) {
+            isOnline = true;
+            statusDot.className = 'status-indicator online';
+            statusTitle.textContent = '🟢 EduCloud Server is Online!';
+            statusDesc.textContent = 'Unified Backend, AI Engine & Web App ready on http://127.0.0.1:8000';
+            connectBtn.style.display = 'inline-flex';
+            
+            // Auto redirect to app if opened directly
+            setTimeout(() => {
+              window.location.href = 'http://127.0.0.1:8000';
+            }, 1200);
+          }
+          return;
+        }
+      } catch (err) {
+        // Server offline
+      }
+
+      isOnline = false;
+      statusDot.className = 'status-indicator';
+      statusTitle.textContent = 'EduCloud Server: Waiting for Start';
+      statusDesc.textContent = 'Double-click Run_EduCloud.bat in this folder to start the server (auto-detecting...)';
+      connectBtn.style.display = 'none';
+    }
+
+    // Initial check and periodic polling
+    checkServer();
+    setInterval(checkServer, 1500);
+
+    function openAmplifyModal() {
+      document.getElementById('amplifyModal').classList.add('active');
+    }
+    function closeAmplifyModal() {
+      document.getElementById('amplifyModal').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
